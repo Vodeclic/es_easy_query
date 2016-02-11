@@ -14,7 +14,9 @@ module EsEasyQuery
     end
 
     def index(index_name)
-      new(index_name: index_name)
+      instance = self.class.new(query_class)
+      instance.send(:_index_name=, index_name)
+      instance
     end
 
     # query the query to execute on elasticsearch
