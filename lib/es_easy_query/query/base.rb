@@ -11,8 +11,10 @@ module EsEasyQuery
 
       class_attribute :index_name
 
-      # Hold all params that will be used to process the query
+      # Hold all params that will be used baseto process the query
       attr_accessor :params
+
+      include EsEasyQuery::Query::Composed
 
       class NotFoundQuery < StandardError; end
 

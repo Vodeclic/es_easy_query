@@ -1,4 +1,5 @@
 require "es_easy_query/version"
+require "es_easy_query/query/composed"
 require "es_easy_query/query/base"
 require "es_easy_query/executor"
 
@@ -8,11 +9,16 @@ module EsEasyQuery
   mattr_accessor :queries_path
   @@queries_path = "app/es_queries"
 
-  # find the given query and wrap it inside a aexcutor
+  # Find the given query by his name and return it ready for execution
+  #
   def self.use(query)
-    query.to_s.camelize.safe_constantize unless Rails.configuration.eager_load
-    query_klass = Query::Base.find(query)
+    query_klass = find(q)
     QueryExecutor.new(query_klass)
+  end
+
+  def self.find(query)
+    query.to_s.camelize.safe_constantize unless Rails.configuration.eager_load
+    Query::Base.find(query)
   end
 
   def self.client
