@@ -22,7 +22,40 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You must create one class per query, each of these class should have a query method containing
+a valid elasticsearch query
+
+Define your queries in ```app/es_queries```
+
+Exemple
+
+```
+class SubjectSearchV1 < EsEasyQuery::Query::Base
+  use_index :subject
+
+  def query
+    {
+      query: {
+        match_all: {
+          text: params[:match]
+        }
+      }
+    }
+  end
+end
+```
+
+This class will execute again the subject index.
+
+The you can use anywhere in your code
+
+```
+EsEasyQuery.use(:subject_search_v1).search(match: "test")
+```
+
+It will return you your results
+
+
 
 ## Development
 

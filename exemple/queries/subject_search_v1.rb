@@ -10,4 +10,5 @@ class SubjectSearchV1 < EsEasyQuery::Query::Base
       }
     }
   end
+
 end
