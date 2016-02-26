@@ -1,0 +1,202 @@
+{
+    "mappings": {
+        "_default_": {
+            "dynamic_templates": [
+                {
+                    "string_template": {
+                        "mapping": {
+                            "fields": {
+                                "analyzed": {
+                                    "index": "analyzed",
+                                    "type": "string"
+                                },
+                                "{name}": {
+                                    "index": "not_analyzed",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "multi_field"
+                        },
+                        "match": "*",
+                        "match_mapping_type": "string"
+                    }
+                }
+            ],
+            "properties": {}
+        }
+    },
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "default_index": {
+                    "filter": [
+                        "standard",
+                        "lowercase",
+                        "asciifolding",
+                        "searchkick_index_shingle",
+                        "searchkick_stemmer"
+                    ],
+                    "tokenizer": "standard",
+                    "type": "custom"
+                },
+                "searchkick_autocomplete_index": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding"
+                    ],
+                    "tokenizer": "searchkick_autocomplete_ngram",
+                    "type": "custom"
+                },
+                "searchkick_autocomplete_search": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding"
+                    ],
+                    "tokenizer": "keyword",
+                    "type": "custom"
+                },
+                "searchkick_keyword": {
+                    "filter": [
+                        "lowercase",
+                        "searchkick_stemmer"
+                    ],
+                    "tokenizer": "keyword",
+                    "type": "custom"
+                },
+                "searchkick_search": {
+                    "filter": [
+                        "standard",
+                        "lowercase",
+                        "asciifolding",
+                        "searchkick_search_shingle",
+                        "searchkick_stemmer"
+                    ],
+                    "tokenizer": "standard",
+                    "type": "custom"
+                },
+                "searchkick_search2": {
+                    "filter": [
+                        "standard",
+                        "lowercase",
+                        "asciifolding",
+                        "searchkick_stemmer"
+                    ],
+                    "tokenizer": "standard",
+                    "type": "custom"
+                },
+                "searchkick_suggest_index": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "searchkick_suggest_shingle"
+                    ],
+                    "tokenizer": "standard",
+                    "type": "custom"
+                },
+                "searchkick_text_end_index": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "reverse",
+                        "searchkick_edge_ngram",
+                        "reverse"
+                    ],
+                    "tokenizer": "keyword",
+                    "type": "custom"
+                },
+                "searchkick_text_middle_index": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "searchkick_ngram"
+                    ],
+                    "tokenizer": "keyword",
+                    "type": "custom"
+                },
+                "searchkick_text_start_index": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "searchkick_edge_ngram"
+                    ],
+                    "tokenizer": "keyword",
+                    "type": "custom"
+                },
+                "searchkick_word_end_index": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "reverse",
+                        "searchkick_edge_ngram",
+                        "reverse"
+                    ],
+                    "tokenizer": "standard",
+                    "type": "custom"
+                },
+                "searchkick_word_middle_index": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "searchkick_ngram"
+                    ],
+                    "tokenizer": "standard",
+                    "type": "custom"
+                },
+                "searchkick_word_search": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding"
+                    ],
+                    "tokenizer": "standard",
+                    "type": "custom"
+                },
+                "searchkick_word_start_index": {
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "searchkick_edge_ngram"
+                    ],
+                    "tokenizer": "standard",
+                    "type": "custom"
+                }
+            },
+            "filter": {
+                "searchkick_edge_ngram": {
+                    "max_gram": 50,
+                    "min_gram": 1,
+                    "type": "edgeNGram"
+                },
+                "searchkick_index_shingle": {
+                    "token_separator": "",
+                    "type": "shingle"
+                },
+                "searchkick_ngram": {
+                    "max_gram": 50,
+                    "min_gram": 1,
+                    "type": "nGram"
+                },
+                "searchkick_search_shingle": {
+                    "output_unigrams": false,
+                    "output_unigrams_if_no_shingles": true,
+                    "token_separator": "",
+                    "type": "shingle"
+                },
+                "searchkick_stemmer": {
+                    "language": "English",
+                    "type": "snowball"
+                },
+                "searchkick_suggest_shingle": {
+                    "max_shingle_size": 5,
+                    "type": "shingle"
+                }
+            },
+            "tokenizer": {
+                "searchkick_autocomplete_ngram": {
+                    "max_gram": 50,
+                    "min_gram": 1,
+                    "type": "edgeNGram"
+                }
+            }
+        }
+    }
+}
