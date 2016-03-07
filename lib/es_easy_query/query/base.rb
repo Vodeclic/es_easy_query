@@ -14,6 +14,9 @@ module EsEasyQuery
       # Hold all params that will be used baseto process the query
       attr_accessor :params
 
+      # Ho many resluts do you want
+      attr_accessor :size
+
       include EsEasyQuery::Query::Composed
 
       class NotFoundQuery < StandardError; end
@@ -54,7 +57,14 @@ module EsEasyQuery
 
       # compile the query to a string suitiable to send to es
       def compile
-        query.to_json
+        q = to_hash
+        q.to_json
+      end
+
+      def to_hash
+        q = query
+        q[:size] ||= size if size
+        q
       end
 
       alias_method :to_json, :compile

@@ -4,6 +4,10 @@ module EsEasyQuery
     # the Query object to execute
     attr_reader :query_class
 
+    # size of the result set
+    attr_reader :size
+
+
     # The index to ru the query again
     attr_internal :_index_name
 
@@ -11,6 +15,7 @@ module EsEasyQuery
 
     def initialize(klass)
       @query_class = klass
+      @size = nil
     end
 
     def index(index_name)
@@ -24,12 +29,20 @@ module EsEasyQuery
       client.search index: index_name, body: query(params).to_json
     end
 
+    def size(size)
+      instance = self.class.new(query_class)
+      instance.instance_variable_set("@size", size)
+      instance
+    end
+
     def index_name
       _index_name.presence || query_class.index_name
     end
 
     def query(params = {})
       query = query_class.new(params)
+      query.size = @size if @size
+      query
     end
 
     def client
