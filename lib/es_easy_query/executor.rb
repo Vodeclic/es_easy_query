@@ -20,6 +20,7 @@ module EsEasyQuery
 
     def index(index_name)
       instance = self.class.new(query_class)
+      instance.instance_variable_set("@size", size) if @size
       instance.send(:_index_name=, index_name)
       instance
     end
@@ -31,6 +32,7 @@ module EsEasyQuery
 
     def size(size)
       instance = self.class.new(query_class)
+      instance.send(:_index_name=, index_name)
       instance.instance_variable_set("@size", size)
       instance
     end
