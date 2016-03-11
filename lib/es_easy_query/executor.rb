@@ -16,6 +16,7 @@ module EsEasyQuery
     def initialize(klass)
       @query_class = klass
       @size = nil
+      @instrumenter = EsEasyQuery.instrumenter
     end
 
     def index(index_name)
@@ -27,7 +28,11 @@ module EsEasyQuery
 
     # query the query to execute on elasticsearch
     def search(params = {})
-      client.search index: index_name, body: query(params).to_json
+      results = nil
+      q = query(params)
+      results = client.search index: index_name, body: q.to_json
+      # instrument :search,  query: q, duration:
+      results
     end
 
     def size(size)
@@ -49,6 +54,14 @@ module EsEasyQuery
 
     def client
       EsEasyQuery.client
+    end
+
+    protected
+
+    def instrument(name, env = {})
+      @instrumenter.instrument("#{name}.es_easy_query", env) do
+        yield if block_given?
+      end
     end
   end
 

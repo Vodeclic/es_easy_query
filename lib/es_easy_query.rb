@@ -15,6 +15,8 @@ module EsEasyQuery
   mattr_accessor :settings_path
   @@settings_path = "app/es_mappings"
 
+  mattr_accessor :instrumenter
+
   # Find the given query by his name and return it ready for execution
   #
   def self.use(query)
