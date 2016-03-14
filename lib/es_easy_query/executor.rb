@@ -31,7 +31,7 @@ module EsEasyQuery
       results = nil
       q = query(params)
       results = client.search index: index_name, body: q.to_json
-      instrument :search,  query: q, duration: results["took"], total: results["hits"]["total"], query_name: q.class.query_name
+      instrument :search,  query: q, duration: results["took"], total: results["hits"]["total"], query_name: q.class.query_name, params: params
       results
     end
 
