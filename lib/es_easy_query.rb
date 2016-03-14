@@ -16,6 +16,7 @@ module EsEasyQuery
   @@settings_path = "app/es_mappings"
 
   mattr_accessor :instrumenter
+  @instrumenter = ActiveSupport::Notifications
 
   # Find the given query by his name and return it ready for execution
   #
@@ -37,6 +38,11 @@ module EsEasyQuery
 
   def self.client
     Elasticsearch::Client.new
+  end
+
+
+  def self.configure
+    yield self
   end
 end
 
